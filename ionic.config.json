@@ -1,0 +1,7 @@
+{
+  "name": "get-your-route-mobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
