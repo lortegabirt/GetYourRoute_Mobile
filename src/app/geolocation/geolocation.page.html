@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>geolocation</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label class="ion-text-center">
+      <h1>{{(stopWatch$ | async).value | duration}}</h1>
+    </ion-label>
+  </ion-item>
+  <ng-container *ngIf="!(stopWatch$ | async).count">
+    <ion-button (click)="onStart()" expand="block">Start</ion-button>
+  </ng-container>
+  <ng-container *ngIf="(stopWatch$ | async).count">
+    <ion-button (click)="onStop()" expand="block">Stop</ion-button>
+  </ng-container>
+</ion-content>
