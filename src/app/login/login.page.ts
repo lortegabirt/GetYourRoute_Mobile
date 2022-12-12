@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
-import {ViewDidLeave} from "@ionic/angular";
+import {AlertController, ViewDidLeave} from "@ionic/angular";
 import {take} from "rxjs";
 import {Router} from "@angular/router";
 
@@ -17,6 +17,7 @@ export class LoginPage implements OnInit, ViewDidLeave {
   }
 
   constructor(private authenticationService: AuthenticationService,
+              private alertController: AlertController,
               private router: Router) { }
 
   ngOnInit() {
@@ -25,7 +26,14 @@ export class LoginPage implements OnInit, ViewDidLeave {
   onLogin() {
     this.authenticationService.login(this.credentials).pipe(
       take(1)
-    ).subscribe(session => this.router.navigate(['itinerary']));
+    ).subscribe({
+      next: session => this.router.navigate(['itinerary']),
+      error: err => this.alertController.create({
+        header: 'Error',
+        message: err.message,
+        buttons: ['OK'],
+      }).then(alert => alert.present())
+    });
   }
 
   ionViewDidLeave(): void {

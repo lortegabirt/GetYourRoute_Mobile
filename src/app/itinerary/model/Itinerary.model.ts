@@ -7,4 +7,5 @@ export interface Itinerary {
   beginDate: Date;
   endDate?: Date;
   user: User;
+  idUser: string;
 }

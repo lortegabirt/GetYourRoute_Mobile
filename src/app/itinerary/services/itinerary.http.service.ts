@@ -19,6 +19,6 @@ export class ItineraryHttpService {
   }
 
   public endItinerary(itineraryId: string): Observable<Itinerary> {
-    return this.http.put<Itinerary>(`${this.baseUrl}${this.path}${itineraryId}`, {});
+    return this.http.put<Itinerary>(`${this.baseUrl}${this.path}stopitinerary/${itineraryId}`, {});
   }
 }

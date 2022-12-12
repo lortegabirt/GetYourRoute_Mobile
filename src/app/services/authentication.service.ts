@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, concatMap, map, Observable, tap} from "rxjs";
+import {BehaviorSubject, concatMap, filter, map, Observable, tap} from "rxjs";
 import {Jwt, Session} from "./model/Session.model";
 import {AuthenticationHttpService} from "./authentication.http.service";
 import {Router} from "@angular/router";
@@ -56,6 +56,7 @@ export class AuthenticationService {
       if (!!token && !restoredSession?.isExpired) {
         console.log('session restored');
         this._session.next(restoredSession);
+        this.router.navigate(['itinerary']);
       } else {
         console.log('token expired');
         this.router.navigate(['']);

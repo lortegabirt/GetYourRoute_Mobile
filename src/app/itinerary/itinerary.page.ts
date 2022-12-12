@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthenticationService} from "../services/authentication.service";
 import {ItineraryHttpService} from "./services/itinerary.http.service";
-import {map, take} from "rxjs";
+import {filter, map, take, tap} from "rxjs";
 import {Router} from "@angular/router";
 import {IonModal} from "@ionic/angular";
 import {OverlayEventDetail} from '@ionic/core/components'
@@ -25,6 +25,8 @@ export class ItineraryPage implements OnInit {
   ngOnInit() {
     this.authenticationService.session.pipe(
       take(1),
+      tap(session => !session && this.router.navigate([''])),
+      filter(session => !!session),
       map(session => session.subjectId)
     ).subscribe(userId => this.userId = userId);
   }
@@ -48,7 +50,8 @@ export class ItineraryPage implements OnInit {
         name: this.itineraryName,
         user: {
           id: this.userId
-        }
+        },
+        idUser: this.userId
       }).subscribe(itinerary => this.router.navigate(['geolocation', itinerary.id]))
     }
   }

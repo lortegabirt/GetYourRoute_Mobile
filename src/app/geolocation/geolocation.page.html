@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>geolocation</ion-title>
+    <ion-title>Getting Your Route</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -15,5 +15,8 @@
   </ng-container>
   <ng-container *ngIf="(stopWatch$ | async).count">
     <ion-button (click)="onStop()" expand="block">Stop</ion-button>
+  </ng-container>
+  <ng-container *ngIf="(stopWatch$ | async).value > 0">
+    <ion-button (click)="onEnd()" expand="block" color="danger">End Itinerary</ion-button>
   </ng-container>
 </ion-content>
