@@ -4,6 +4,6 @@ type GeoJsonType = "Point" | "MultiPoint" | "LineString" | "MultiLineString" | "
 export interface GeolocationType {
   timestamp: Date;
   itineraryId: string;
-  userId: string;
+  userId?: string;
   location: LocationPoint;
 }
