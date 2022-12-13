@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {StopWatchService} from "../services/stop-watch.service";
 import {AlertController, ViewDidLeave} from "@ionic/angular";
-import {catchError, map, Observable, of, skip, Subject, switchMap, take, takeUntil, tap, throttleTime} from "rxjs";
+import {Observable, of, Subject, take, tap} from "rxjs";
 import {GeolocationHttpService} from "./services/geolocation-http.service";
 import {GeolocationService} from "./services/geolocation.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -36,25 +36,27 @@ export class GeolocationPage implements OnInit, ViewDidLeave {
       tap(({id}) => this.itineraryId = id)
     ).subscribe();
     this.stopWatch$ = this.stopWatchService.stopwatch$;
-    this.stopWatch$.pipe(
-      skip(1),
-      throttleTime(10000),
-      switchMap(_ => this.geolocationService.getCurrentPosition()),
-      map(geolocation => ({...geolocation, itineraryId: this.itineraryId})),
-      switchMap(geolocation => this.geolocationHttpService.save(geolocation).pipe(
-        catchError(this.handleSaveError(geolocation)
-       )
-      )),
-      takeUntil(this.itineraryEnded$)
-    ).subscribe();
+    // this.stopWatch$.pipe(
+    //   skip(1),
+    //   throttleTime(10000),
+    //   switchMap(_ => this.geolocationService.getCurrentPosition()),
+    //   map(geolocation => ({...geolocation, itineraryId: this.itineraryId})),
+    //   switchMap(geolocation => this.geolocationHttpService.save(geolocation).pipe(
+    //     catchError(this.handleSaveError(geolocation)
+    //    )
+    //   )),
+    //   takeUntil(this.itineraryEnded$)
+    // ).subscribe();
   }
 
   onStart() {
     this.stopWatchService.start();
+    this.geolocationService.startWatching(this.itineraryId);
   }
 
   onStop() {
     this.stopWatchService.stop();
+    this.geolocationService.stopWatching();
   }
 
   async onEnd() {
@@ -70,6 +72,7 @@ export class GeolocationPage implements OnInit, ViewDidLeave {
         tap(_ => this.itineraryEnded$.next('')),
       ).subscribe(_ => this.router.navigate(['itinerary']));
     }
+    this.geolocationService.stopWatching();
   }
 
   ionViewDidLeave(): void {
