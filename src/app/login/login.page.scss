@@ -1,0 +1,17 @@
+ion-title{
+    --color:  var(--ion-color-light);
+}
+.header-title{
+    display:flex;
+    flex-direction:row;
+    align-items:right;
+    height: 3rem;
+    padding: 0.2rem;
+}
+ion-content{
+    --background:  var(--ion-color-primary);
+}
+
+.bottom-img{
+    height: 14rem;
+}
