@@ -9,6 +9,15 @@ ion-button{
     --text: var(--ion-color-light);
 }
 
+.createIt{
+    --color:  var(--ion-color-dark);
+}
+
+.modalButton{
+    --color: var(--ion-color-light);
+}
+
 .bottom-img{
-    height: 14rem;
+    margin-top: 2rem;
+    height:30rem;
 }
